@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع الزواج</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        /* Header Style */
+        .header {
+            background-color: #ff69b4; /* Pink */
+            color: white;
+            padding: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Arrow Style */
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid red; /* Red color for the arrow */
+            position: absolute;
+            top: -40px; /* Position above the wheel */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        /* Wheel Container Style */
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: auto; /* Allow height to adjust based on content */
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Instruction Text Style */
+        .instructions {
+            font-size: 1.2em; /* Adjusted font size for mobile */
+            color: #ff69b4; /* Pink */
+            margin-bottom: 20px; /* Adjusted margin for mobile */
+        }
+
+        /* Wheel Style */
+        .wheel {
+            width: 80vw; /* Adjusted width for mobile */
+            height: 80vw; /* Adjusted height for mobile */
+            max-width: 500px; /* Maximum width */
+            max-height: 500px; /* Maximum height */
+            border-radius: 50%;
+            border: 10px solid #ff69b4; /* Pink */
+            position: relative;
+            background: conic-gradient(
+                #ff69b4 0deg 30deg,
+                #ffb6c1 30deg 60deg,
+                #ff69b4 60deg 90deg,
+                #ffb6c1 90deg 120deg,
+                #ff69b4 120deg 150deg,
+                #ffb6c1 150deg 180deg,
+                #ff69b4 180deg 210deg,
+                #ffb6c1 210deg 240deg,
+                #ff69b4 240deg 270deg,
+                #ffb6c1 270deg 300deg,
+                #ff69b4 300deg 330deg,
+                #ffb6c1 330deg 360deg
+            );
+        }
+
+        .wheel .segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            clip-path: polygon(100% 0, 0 0, 0 100%);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white; /* White text color */
+            font-weight: bold;
+            text-align: center;
+            font-size: 1em; /* Adjusted font size for mobile */
+            transform-origin: 100% 100%;
+            box-sizing: border-box;
+            padding: 10px; /* Adjusted padding for mobile */
+            overflow: hidden;
+        }
+
+        .wheel .segment span {
+            display: block;
+            transform: rotate(-30deg) translateY(-40%); /* Increased vertical shift */
+            width: 100%;
+            text-align: center;
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+
+        .wheel .segment:nth-child(1) { transform: rotate(0deg); }
+        .wheel .segment:nth-child(2) { transform: rotate(30deg); }
+        .wheel .segment:nth-child(3) { transform: rotate(60deg); }
+        .wheel .segment:nth-child(4) { transform: rotate(90deg); }
+        .wheel .segment:nth-child(5) { transform: rotate(120deg); }
+        .wheel .segment:nth-child(6) { transform: rotate(150deg); }
+        .wheel .segment:nth-child(7) { transform: rotate(180deg); }
+        .wheel .segment:nth-child(8) { transform: rotate(210deg); }
+        .wheel .segment:nth-child(9) { transform: rotate(240deg); }
+        .wheel .segment:nth-child(10) { transform: rotate(270deg); }
+        .wheel .segment:nth-child(11) { transform: rotate(300deg); }
+        .wheel .segment:nth-child(12) { transform: rotate(330deg); }
+
+        /* Button to spin the wheel */
+        #spin-button {
+            background-color: #ff69b4; /* Pink */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em; /* Adjusted font size for mobile */
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        #spin-button:hover {
+            background-color: #ffb6c1; /* Light pink */
+            transform: scale(1.1); /* Slightly enlarge the button */
+        }
+
+        /* Subscribe Button Style */
+        #subscribe-button {
+            display: inline-block;
+            background-color: #ff69b4; /* Pink */
+            color: white;
+            padding: 15px 30px;
+            font-size: 1em; /* Adjusted font size for mobile */
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #subscribe-button:hover {
+            background-color: #ffb6c1; /* Light pink */
+            transform: scale(1.1); /* Slightly enlarge the button */
+        }
+
+        /* Contract Section Style */
+        .contract {
+            display: none;
+            margin-top: 20px;
+            font-size: 1em; /* Adjusted font size for mobile */
+            color: #ff69b4; /* Pink */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">سلام عليكم ليوم نزوجكم قاع</div>
+
+    <!-- Instruction Text -->
+    <div class="instructions">باه نتافهمو كاين قانون واحد لي تطيح معاك غادي تولي معاها اونكوبل 24 ساعة كومبلي</div>
+
+    <!-- Wheel and Arrow Container -->
+    <div class="wheel-container">
+        <div class="arrow"></div> <!-- Arrow pointing to the selected segment -->
+        <div class="wheel">
+            <div class="segment"><span>أسامة</span></div>
+            <div class="segment"><span>مروى</span></div>
+            <div class="segment"><span>سيف</span></div>
+            <div class="segment"><span>آية</span></div>
+            <div class="segment"><span>رحيم</span></div>
+            <div class="segment"><span>سيدرا</span></div>
+            <div class="segment"><span>شيهاب</span></div>
+            <div class="segment"><span>ميمي</span></div>
+            <div class="segment"><span>أيمن</span></div>
+            <div class="segment"><span>فريال</span></div>
+            <div class="segment"><span>جونيور</span></div>
+            <div class="segment"><span>روميسة</span></div>
+        </div>
+    </div>
+
+    <!-- Button to spin the wheel -->
+    <button id="spin-button">دور هنا</button>
+
+    <!-- Subscribe Button -->
+    <a href="https://www.instagram.com/spiderlolman44/" target="_blank" id="subscribe-button">ابوني هنا</a>
+
+    <!-- Contract section -->
+    <div class="contract" id="contract">
+        <p>عقد زواج: بعد القرعة سوف نزوج <span id="name1"></span> مع <span id="name2"></span> ويدكم فيه عييتوني.</p>
+    </div>
+
+    <script>
+        document.getElementById('spin-button').addEventListener('click', function() {
+            var wheel = document.querySelector('.wheel');
+            var contract = document.getElementById('contract');
+            var names = ['أسامة', 'مروى', 'سيف', 'آية', 'رحيم', 'سيدرا', 'شيهاب', 'ميمي', 'أيمن', 'فريال', 'جونيور', 'روميسة'];
+
+            // Calculate random rotation
+            var rotation = Math.floor(Math.random() * 360) + 1440; // Spin twice
+            wheel.style.transition = 'transform 4s ease-out';
+            wheel.style.transform = 'rotate(' + rotation + 'deg)';
+
+            // Determine the winning pair
+            setTimeout(function() {
+                // Spin again
+                rotation += 1440; // Add another full spin
+                wheel.style.transition = 'transform 4s ease-out';
+                wheel.style.transform = 'rotate(' + rotation + 'deg)';
+
+                // Determine names based on current rotation
+                var angle = (rotation % 360) / (360 / names.length);
+                var index1 = Math.floor(angle) % names.length;
+                var index2 = (index1 + 1) % names.length;
+
+                // Ensure correct pairings
+                if (names[index1] === 'سيف') {
+                    name1 = 'سيف';
+                    name2 = 'آية';
+                } else if (names[index1] === 'آية') {
+                    name1 = 'آية';
+                    name2 = 'سيف';
+                } else if (names[index1] === 'أسامة') {
+                    name1 = 'أسامة';
+                    name2 = 'مروى';
+                } else if (names[index1] === 'مروى') {
+                    name1 = 'مروى';
+                    name2 = 'أسامة';
+                } else {
+                    name1 = names[index1];
+                    name2 = names[index2];
+                }
+
+                document.getElementById('name1').textContent = name1;
+                document.getElementById('name2').textContent = name2;
+                contract.style.display = 'block';
+            }, 4000); // Match the duration of the spinning animation
+        });
+    </script>
+</body>
+</html>
